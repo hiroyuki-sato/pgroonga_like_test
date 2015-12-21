@@ -1,6 +1,43 @@
 
+## やりたいこと
+
+* 二つのテーブル
+* url_listsテーブルには、URLのリスト(アクセスログ)
+* keywordsのテーブルには、url_listsの中で先頭・部分・完全一致させたいURLのリスト
+* 今回は前方一致ができれば良い。
+
+## 疑問
+
+* [ ] Like分でpgroongaのインデックスが使われないのはなぜか？
+* [ ] クエリプランで``Join Filter``と出る場合、Groongaのインデックスが使われない？
+* [ ] ``@~``を利用する際に、``.``をエスケープしないと検索結果が0件になってしまう理由
+
+## ファイル
+
+```
+.
+|-- ER.graffle   # ER図
+|-- ER.png       # ER図(png)
+|-- README.md    # この文書
+|-- create.sql   # テストテーブル作成用SQL
+|-- keyword.txt  # keywordのリスト
+|-- m.sql        # pgroongaに入っていたクエリ
+|-- q1.sql       # テストクエリ1
+|-- q2.sql       # テストクエリ2
+|-- q3.sql       # テストクエリ3
+|-- q4.sql       # テストクエリ4
+|-- q5.sql       # テストクエリ5
+|-- sample.txt   # サンプルURL
+`-- sample_gen.rb # URLデータ生成スクリプト
+
+0 directories, 13 files
+````
+
 ## テーブル定義
 
+![](https://raw.githubusercontent.com/hiroyuki-sato/pgroonga_like_test/master/ER.png)
+
+## インデックス
 
 インデックス(URL)
 
@@ -153,6 +190,19 @@ WHERE
 
 ## クエリ5 : @~でジョイン、.をエスケープ
 
+
+```
+                                              QUERY PLAN                                               
+-------------------------------------------------------------------------------------------------------
+ Nested Loop  (cost=0.30..356.06 rows=12500 width=56)
+   ->  Index Scan using ix_name_keywords on keywords k  (cost=0.14..8.16 rows=1 width=516)
+         Index Cond: ((name)::text = 'esc_url'::text)
+   ->  Index Only Scan using ix_url_url_lists2 on url_lists u  (cost=0.15..222.90 rows=12500 width=56)
+         Index Cond: (url @~ k.url)
+(5 rows)
+```
+
+
 ```
 2015-12-21 18:39:28.491031|n| grn_init: <5.1.0>
 2015-12-21 18:39:28.503632|i| [object][search][index][key][regexp] <Lexicon76274_0.index>
@@ -168,15 +218,4 @@ WHERE
 2015-12-21 18:39:28.516017|i| exact: 1000
 2015-12-21 18:39:28.516028|i| hits=1000
 2015-12-21 18:39:28.544379|n| grn_fin (0)
-```
-
-```
-                                              QUERY PLAN                                               
--------------------------------------------------------------------------------------------------------
- Nested Loop  (cost=0.30..356.06 rows=12500 width=56)
-   ->  Index Scan using ix_name_keywords on keywords k  (cost=0.14..8.16 rows=1 width=516)
-         Index Cond: ((name)::text = 'esc_url'::text)
-   ->  Index Only Scan using ix_url_url_lists2 on url_lists u  (cost=0.15..222.90 rows=12500 width=56)
-         Index Cond: (url @~ k.url)
-(5 rows)
 ```
