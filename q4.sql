@@ -1,6 +1,6 @@
 SET enable_seqscan = off;
 SET enable_indexscan = on;
-SET enable_bitmapscan = off;
+SET enable_bitmapscan = on;
 
 set pgroonga.log_level = 'debug';
 

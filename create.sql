@@ -1,6 +1,6 @@
 create table url_lists (
   id int not null primary key,
-  url varchar(1023) not null
+  url text not null
 );
 
 create index
@@ -8,21 +8,21 @@ create index
 on
   url_lists
 using
-  pgroonga(url)
-with 
-  (tokenizer='TokenRegexp', normalizer='');
+  pgroonga(url pgroonga.text_regexp_ops);
 
+/*
 create index
   ix_url_url_lists2
 on
   url_lists
 using
   pgroonga(url pgroonga.varchar_regexp_ops);
+*/
   
 create table keywords (
   id int not null primary key,
   name varchar(40) not null,
-  url varchar(1023) not null
+  url text not null
 );
 
 create index ix_url_keywords on keywords(url);
