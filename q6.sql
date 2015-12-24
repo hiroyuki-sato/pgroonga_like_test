@@ -12,7 +12,9 @@ FROM
   url_lists u,
   keywords k
 WHERE
-  u.url @~ k.url;
+  u.url @~ k.url
+AND
+  k.name = 'esc_url';
 
 SELECT
   u.url 
@@ -20,4 +22,6 @@ FROM
   url_lists u,
   keywords k
 WHERE
-  u.url @~ k.url;
+  u.url @~ k.url
+AND
+  k.name = 'esc_url';
