@@ -2,5 +2,5 @@
 2,like_str,http://ae.yahoo.co.jp/ee/%
 3,url,http://aa.yahoo.co.jp/aa/
 4,url,http://ae.yahoo.co.jp/ee/
-5,esc_url,http://aa\\.yahoo\\.co\\.jp/aa/
-6,esc_url,http://ae\\.yahoo\\.co\\.jp/ee/
+5,esc_url,\\Ahttp://aa\\.yahoo\\.co\\.jp/aa/
+6,esc_url,\\Ahttp://ae\\.yahoo\\.co\\.jp/ee/
