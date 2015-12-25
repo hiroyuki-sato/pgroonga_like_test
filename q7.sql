@@ -12,7 +12,10 @@ FROM
   url_lists u,
   keywords k
 WHERE
-  u.url like k.url;
+  u.url like k.url
+AND
+  k.name = 'like_str';
+
 
 SELECT
   u.url 
@@ -20,4 +23,7 @@ FROM
   url_lists u,
   keywords k
 WHERE
-  u.url like k.url;
+  u.url like k.url
+AND
+  k.name = 'like_str';
+
