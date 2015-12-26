@@ -9,7 +9,7 @@ idx = 0
   ('aaa'..'zzz').each do |p_str|
     1.upto(50).each do |n|
       idx += 1
-      puts [idx,"http://a#{u_char}.yahoo.co.jp/"+p_str+SecureRandom.hex(15)].to_csv
+      puts [idx,"http://a#{u_char}.yahoo.co.jp/"+p_str+'/'+SecureRandom.hex(15)].to_csv
     end
   end
 
